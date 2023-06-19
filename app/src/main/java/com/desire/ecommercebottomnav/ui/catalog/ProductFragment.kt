@@ -35,7 +35,7 @@ class ProductFragment : Fragment() {
     ): View? {
         binding = FragmentProductBinding.inflate(layoutInflater)
         backScreen()
-        counter()
+     //   counter()
         return binding.root
     }
 
@@ -63,7 +63,7 @@ class ProductFragment : Fragment() {
         }
     }
 
-    private fun counter() {
+    /*private fun counter() {
         binding.ivPlus.setOnClickListener { increaseInteger() }
         binding.ivMinus.setOnClickListener { decreaseInteger() }
     }
@@ -84,7 +84,7 @@ class ProductFragment : Fragment() {
 
     private fun display(number: Int) {
         binding.tvCounter.setText("$number")
-    }
+    }*/
 
     private fun multiply(counter : Int ): Float {
         val number1 = binding.textPrice1.text.toString()
