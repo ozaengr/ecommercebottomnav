@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.desire.ecommercebottomnav.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_catalog"
+        android:name="com.desire.ecommercebottomnav.ui.catalog.CatalogFragment"
+        android:label="@string/title_catalog"
+        tools:layout="@layout/fragment_catalog">
+
+        <action
+            android:id="@+id/navigation_catalog_to_navigation_product"
+            app:destination="@+id/navigation_product">
+
+        </action>
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_chat"
+        android:name="com.desire.ecommercebottomnav.ui.chat.ChatFragment"
+        android:label="@string/title_chat"
+        tools:layout="@layout/fragment_chat" />
+
+    <fragment
+        android:id="@+id/navigation_cart"
+        android:name="com.desire.ecommercebottomnav.ui.cart.CartFragment"
+        android:label="@string/title_cart"
+        tools:layout="@layout/fragment_cart">
+
+        <action
+            android:id="@+id/navigation_cart_to_navigation_add_to_cart"
+            app:destination="@+id/navigation_add_to_cart" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_product"
+        android:name="com.desire.ecommercebottomnav.ui.catalog.ProductFragment"
+        android:label="@string/title_product"
+        tools:layout="@layout/fragment_product">
+
+        <argument
+            android:name="productDetailsRCV"
+            app:argType="com.desire.ecommercebottomnav.ui.home.RcvModel" />
+
+        <argument android:name="desc"
+            app:argType="string"
+            />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_add_to_cart"
+        android:name="com.desire.ecommercebottomnav.ui.cart.AddToCartFragment"
+        android:label="@string/title_add_to_cart"
+        tools:layout="@layout/fragment_add_to_cart" />
+
+</navigation>
