@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
@@ -23,7 +24,7 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    lateinit var rcvAdapter : RcvAdapter
+    lateinit var rcvAdapter: RcvAdapter
     var arrayListOfData = arrayListOf<RcvModel>()
 
     override fun onCreateView(
@@ -45,8 +46,10 @@ class HomeFragment : Fragment() {
         getProducts()
         return root
     }
+
     private fun getProducts() {
-        var call: Call<ArrayList<RcvModel>> = com.desire.ecommercebottomnav.retrofit.Retrofit.api.getData()
+        var call: Call<ArrayList<RcvModel>> =
+            com.desire.ecommercebottomnav.retrofit.Retrofit.api.getData()
         call.enqueue(object : Callback<ArrayList<RcvModel>> {
             override fun onResponse(
                 call: Call<ArrayList<RcvModel>>,
@@ -59,17 +62,34 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
+
             override fun onFailure(call: Call<ArrayList<RcvModel>>, t: Throwable) {
                 Log.i("Test", "Fail")
             }
         })
     }
+
     private fun setAdapter() {
-        binding.rcvMenu.layoutManager = LinearLayoutManager(this@HomeFragment.context,RecyclerView.HORIZONTAL,false)
-        binding.rcvMenu.adapter = RcvAdapter(arrayListOfData)
+        binding.rcvMenu.layoutManager =
+            LinearLayoutManager(this@HomeFragment.context, RecyclerView.HORIZONTAL, false)
+        rcvAdapter = RcvAdapter(arrayListOfData)
+        binding.rcvMenu.adapter = rcvAdapter
+
+
+
+
         binding.rcvMenu.setHasFixedSize(true)
-        val snapHelper : SnapHelper = LinearSnapHelper()
+        val snapHelper: SnapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(binding.rcvMenu)
+
+        rcvAdapter.onItemClick = {
+            findNavController().navigate(
+                HomeFragmentDirections.navigationHomeToNavigationProduct(
+                    it,
+                    "asas"
+                )
+            )
+        }
     }
 
     override fun onDestroyView() {

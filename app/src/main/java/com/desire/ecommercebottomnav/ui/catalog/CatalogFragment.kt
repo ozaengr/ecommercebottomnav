@@ -35,8 +35,6 @@ class CatalogFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val catalogViewModel =
-            ViewModelProvider(this).get(CatalogViewModel::class.java)
 
         _binding = FragmentCatalogBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -52,15 +50,17 @@ class CatalogFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if(binding.rcvCatalog.adapter == null) {
+        if (binding.rcvCatalog.adapter == null) {
             getProducts()
-        }else{
+        } else {
             setAdapter()
         }
         ivBack()
     }
+
     private fun getProducts() {
-        var call: Call<ArrayList<RcvModel>> = com.desire.ecommercebottomnav.retrofit.Retrofit.api.getData()
+        var call: Call<ArrayList<RcvModel>> =
+            com.desire.ecommercebottomnav.retrofit.Retrofit.api.getData()
         call.enqueue(object : Callback<ArrayList<RcvModel>> {
             override fun onResponse(
                 call: Call<ArrayList<RcvModel>>,
@@ -78,23 +78,29 @@ class CatalogFragment : Fragment() {
             }
         })
     }
+
     private fun setAdapter() {
-        binding.rcvCatalog.layoutManager = GridLayoutManager(this@CatalogFragment.context,2)
-        binding.rcvCatalog.adapter = RcvCatalogAdapter(arrayListOfItems)
+        binding.rcvCatalog.layoutManager = GridLayoutManager(this@CatalogFragment.context, 2)
         adapter = RcvCatalogAdapter(arrayListOfItems)
         binding.rcvCatalog.setHasFixedSize(true)
         binding.rcvCatalog.adapter = adapter
         adapter.onItemClick = {
-            findNavController().navigate(CatalogFragmentDirections.navigationCatalogToNavigationProduct(productDetailsRCV = it, desc= "asdsd"))
+            findNavController().navigate(
+                CatalogFragmentDirections.navigationCatalogToNavigationProduct(
+                    productDetailsRCV = it,
+                    desc = "asdsd"
+                )
+            )
         }
 
     }
 
-    private fun ivBack(){
+    private fun ivBack() {
         binding.ivBack.setOnClickListener {
             findNavController().navigateUp()
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

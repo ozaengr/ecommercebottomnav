@@ -22,7 +22,7 @@ class ProductFragment : Fragment() {
     lateinit var adapter: Adapter
     var arrayListOfItems = arrayListOf<RcvModel>()
 
-    val args by navArgs<ProductFragmentArgs>()
+    private val args by navArgs<ProductFragmentArgs>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -16,9 +16,23 @@ object Retrofit {
 
     val client =
         OkHttpClient().newBuilder().connectTimeout(20, TimeUnit.SECONDS)
+            .addInterceptor { chain ->
+                //return response
+                chain.proceed(
+                    //create request
+                    chain.request()
+                        .newBuilder()
+                        //add headers to the request builder
+                        .also {
+                            it.addHeader("Authorization", "")
+                        }
+                        .build()
+                )
+            }
             .addInterceptor(interceptor)
             .writeTimeout(20, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
+
             .build()
 
     val retrofit = Retrofit.Builder()
